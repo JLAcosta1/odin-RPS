@@ -21,41 +21,62 @@ function computerPlay() {
     return computerPick
 }
 
-function RPS(playerOne, playerTwo) {
+function playRound(playerOne, playerTwo) {
     if (playerOne == playerTwo) {
         return "Draw! Both player played " + playerOne;
     }
 
     if (playerOne == "Rock") {
         if (playerTwo == "Scissors") {
-            return "playerOne wins! " + playerOne + " beats " + playerTwo;
+            return "You win! " + playerOne + " beats " + playerTwo;
         }
 
         else {
-            return "playTwo wins! " + playerTwo + " beats " + playerOne;
+            return "You lose. " + playerTwo + " beats " + playerOne;
         }
     }
     
     if (playerOne == "Paper") {
         if (playerTwo == "Rock") {
-            return "playerOne wins! " + playerOne + " beats " + playerTwo;
+            return "You win! " + playerOne + " beats " + playerTwo;
         }
 
         else {
-            return "playTwo wins! " + playerTwo + " beats " + playerOne;
+            return "You lose. " + playerTwo + " beats " + playerOne;
         }
     }
 
     if (playerOne == "Scissors") {
         if (playerTwo == "Paper") {
-            return "playerOne wins! " + playerOne + " beats " + playerTwo;
+            return "You win! " + playerOne + " beats " + playerTwo;
         }
 
         else {
-            return "playTwo wins! " + playerTwo + " beats " + playerOne;
+            return "You lose. " + playerTwo + " beats " + playerOne;
         }
     }
 
+}
+
+function playerSelectionPrompt() {
+    let booleanSelection = true;
+    let input = prompt("Select rock, paper, or scissors!");
+
+    input.toLowerCase();
+
+
+    while (booleanSelection) {
+        if (input == "rock" || input == "paper" || input == "scissors") {
+            booleanSelection = false;
+        }
+        else {
+            console.log("Invalid input.");
+            input = prompt("Select rock, paper, or scissors!");
+        }
+    }
+
+    input = input.charAt(0).toUpperCase() + input.slice(1);
+    return input;
 }
 
 function repeater() {
@@ -64,10 +85,16 @@ function repeater() {
         let compOne = computerPlay();
         let compTwo = computerPlay();
 
-        console.log(RPS(compOne, compTwo))
+        console.log(playRound(compOne, compTwo))
         i = i + 1;
     }
 }
 
 
-console.log(repeater());
+/* console.log(repeater()); */
+console.log("Step 1");
+let playerSelection = playerSelectionPrompt();
+console.log("Step 2");
+let compOne = computerPlay();
+console.log("Step 3");
+console.log(playRound(playerSelection, compOne));
