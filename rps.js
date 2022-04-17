@@ -22,40 +22,50 @@ function computerPlay() {
 }
 
 function playRound(playerOne, playerTwo) {
+
+    let winner = 0;
+
     if (playerOne == playerTwo) {
-        return "Draw! Both player played " + playerOne;
+
+        console.log("Draw! Both player played " + playerOne);
     }
 
-    if (playerOne == "Rock") {
+    else if (playerOne == "Rock") {
         if (playerTwo == "Scissors") {
-            return "You win! " + playerOne + " beats " + playerTwo;
+            console.log("You win the round! " + playerOne + " beats " + playerTwo);
+            winner = 1;
         }
 
         else {
-            return "You lose. " + playerTwo + " beats " + playerOne;
+            console.log("You lose the round. " + playerTwo + " beats " + playerOne);
+            winner = 2;
         }
     }
     
-    if (playerOne == "Paper") {
+    else if (playerOne == "Paper") {
         if (playerTwo == "Rock") {
-            return "You win! " + playerOne + " beats " + playerTwo;
+            console.log("You win the round! " + playerOne + " beats " + playerTwo);
+            winner = 1;
         }
 
         else {
-            return "You lose. " + playerTwo + " beats " + playerOne;
+            console.log("You lose the round. " + playerTwo + " beats " + playerOne);
+            winner = 2;
         }
     }
 
-    if (playerOne == "Scissors") {
+    else if (playerOne == "Scissors") {
         if (playerTwo == "Paper") {
-            return "You win! " + playerOne + " beats " + playerTwo;
+            console.log("You win the round! " + playerOne + " beats " + playerTwo);
+            winner = 1;
         }
 
         else {
-            return "You lose. " + playerTwo + " beats " + playerOne;
+            console.log("You lose the round. " + playerTwo + " beats " + playerOne);
+            winner = 2;
         }
     }
-
+    return winner;
 }
 
 function playerSelectionPrompt() {
@@ -79,22 +89,49 @@ function playerSelectionPrompt() {
     return input;
 }
 
-function repeater() {
+function game() {
+    let playerTracker = 0;
+    let compTracker = 0;
     let i = 0;
-    while (i < 30) {
+    let winner = 0;
+    while (i < 5) {
+        
+        let playerSelection = playerSelectionPrompt();
         let compOne = computerPlay();
-        let compTwo = computerPlay();
 
-        console.log(playRound(compOne, compTwo))
+        winner = playRound(playerSelection, compOne);
+
+        if (winner == 1) {
+            playerTracker = playerTracker + 1;
+        }
+
+        else if (winner == 2) {
+            compTracker = compTracker + 1;
+        }
+
+
         i = i + 1;
+    }
+
+    if (playerTracker == compTracker) {
+        return "Game ended in a draw!"
+    }
+    else if (playerTracker > compTracker) {
+        return "You win the game!"
+    }
+
+    else {
+        return "You lose the game."
     }
 }
 
 
-/* console.log(repeater()); */
+/* console.log(repeater());
 console.log("Step 1");
 let playerSelection = playerSelectionPrompt();
 console.log("Step 2");
 let compOne = computerPlay();
 console.log("Step 3");
-console.log(playRound(playerSelection, compOne));
+console.log(playRound(playerSelection, compOne)); */
+
+console.log(game());
