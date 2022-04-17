@@ -1,2 +1,2 @@
 # odin-RPS
-Rock Paper Scissors
+Rock Paper Scissors!
