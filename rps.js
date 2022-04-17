@@ -125,13 +125,4 @@ function game() {
     }
 }
 
-
-/* console.log(repeater());
-console.log("Step 1");
-let playerSelection = playerSelectionPrompt();
-console.log("Step 2");
-let compOne = computerPlay();
-console.log("Step 3");
-console.log(playRound(playerSelection, compOne)); */
-
 console.log(game());
