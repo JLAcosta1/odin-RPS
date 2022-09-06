@@ -1,3 +1,7 @@
+let playerTracker = 0;
+let compTracker = 0;
+let gameOver = false;
+
 function getRandomInt() {
     return Math.floor(Math.random() * 3);
 }
@@ -21,108 +25,112 @@ function computerPlay() {
     return computerPick
 }
 
-function playRound(playerOne, playerTwo) {
+function playRound(playerOne, playerTwo = null) {
 
     let winner = 0;
+    let str = '';
+
+    if (playerTwo === null) {
+        playerTwo = computerPlay();
+    }
 
     if (playerOne == playerTwo) {
 
-        console.log("Draw! Both player played " + playerOne);
+        str = "Draw! Both player played " + playerOne;
     }
 
     else if (playerOne == "Rock") {
         if (playerTwo == "Scissors") {
-            console.log("You win the round! " + playerOne + " beats " + playerTwo);
+            str = "You win the round! " + playerOne + " beats " + playerTwo;
             winner = 1;
         }
 
         else {
-            console.log("You lose the round. " + playerTwo + " beats " + playerOne);
+            str = "You lose the round. " + playerTwo + " beats " + playerOne;
             winner = 2;
         }
     }
     
     else if (playerOne == "Paper") {
         if (playerTwo == "Rock") {
-            console.log("You win the round! " + playerOne + " beats " + playerTwo);
+            str = "You win the round! " + playerOne + " beats " + playerTwo;
             winner = 1;
         }
 
         else {
-            console.log("You lose the round. " + playerTwo + " beats " + playerOne);
+            str = "You lose the round. " + playerTwo + " beats " + playerOne;
             winner = 2;
         }
     }
 
     else if (playerOne == "Scissors") {
         if (playerTwo == "Paper") {
-            console.log("You win the round! " + playerOne + " beats " + playerTwo);
+            str = "You win the round! " + playerOne + " beats " + playerTwo;
             winner = 1;
         }
 
         else {
-            console.log("You lose the round. " + playerTwo + " beats " + playerOne);
+            str = "You lose the round. " + playerTwo + " beats " + playerOne;
             winner = 2;
         }
+    }
+    roundResults(str);
+
+    if (winner !== 0) {
+        scoreTracker(winner);
     }
     return winner;
 }
 
-function playerSelectionPrompt() {
-    let booleanSelection = true;
-    let input = prompt("Select rock, paper, or scissors!");
+function scoreTracker(winner) {
 
-    input.toLowerCase();
+    let finalString = ''
 
+    if (winner == 1) {
+        playerTracker = playerTracker + 1;
+    }
 
-    while (booleanSelection) {
-        if (input == "rock" || input == "paper" || input == "scissors") {
-            booleanSelection = false;
+    else if (winner == 2) {
+        compTracker = compTracker + 1;
+    }
+
+    if (winner !== 0) {
+        const div = document.querySelector('#Standing');
+
+        div.textContent = "You: " + playerTracker + " Computer: " + compTracker;
+    }
+
+    if (playerTracker === 5 || compTracker === 5) {
+
+        gameOver = true;
+
+        if (playerTracker == 5) {
+            finalString = "Human wins!"
         }
+
         else {
-            console.log("Invalid input.");
-            input = prompt("Select rock, paper, or scissors!");
-        }
-    }
-
-    input = input.charAt(0).toUpperCase() + input.slice(1);
-    return input;
-}
-
-function game() {
-    let playerTracker = 0;
-    let compTracker = 0;
-    let i = 0;
-    let winner = 0;
-    while (i < 5) {
-        
-        let playerSelection = playerSelectionPrompt();
-        let compOne = computerPlay();
-
-        winner = playRound(playerSelection, compOne);
-
-        if (winner == 1) {
-            playerTracker = playerTracker + 1;
+            finalString = "Computer wins :("
         }
 
-        else if (winner == 2) {
-            compTracker = compTracker + 1;
-        }
-
-
-        i = i + 1;
-    }
-
-    if (playerTracker == compTracker) {
-        return "Game ended in a draw!"
-    }
-    else if (playerTracker > compTracker) {
-        return "You win the game!"
-    }
-
-    else {
-        return "You lose the game."
+        roundResults(finalString)
     }
 }
 
-console.log(game());
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener('click', function(e) {
+    if (!gameOver) {
+        playRound(e.target.id);
+        console.log(e.target.id);
+    }
+}));
+
+function roundResults (str) {
+    const container = document.querySelector('#results');
+
+    const round = document.createElement('div');
+    round.textContent = str;
+
+    container.appendChild(round);
+}
+// console.log(game()); //This will immediately run the game
